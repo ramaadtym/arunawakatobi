@@ -49,6 +49,7 @@
                             <vx-input name="description" v-model="alias.description" id="description"></vx-input>
                           </td>
                           <td>
+                            
                             <button type="submit" class="btn btn-danger" :loading="form.submitted" @click="removeAlias(index, $event)">
                               <i class="la la-times"></i>
                             </button>
@@ -66,9 +67,10 @@
                       <h5 slot="header" class="my-0">
                        Tambah Gambar
                       </h5>
-                        <button type="submit" class="btn btn-primary btn-sm">
-                        Tambah Gambar
-                      </button>
+                      <div class="text-center p-3">
+                        <div id="imageName"></div>
+                        <label class="btn btn-sm btn-primary"><input type="file" name="ganteng" style="display:none" accept="image/x-png,image/gif,image/jpeg" @change="onFileSelected">Tambah Gambar</label>
+                      </div>
                   </vx-card>
                   <vx-card>
                     <h5 slot="header" class="my-0">
@@ -105,7 +107,11 @@
 <script>
   import vAvatar from 'vue-avatar/src/Avatar.vue'
   import { mapState } from 'vuex'
-
+import axios from 'axios'
+var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload'
+var CLOUDINARY_UPLOAD_PRESET = 'wbwuqzlz'
+var file = null
+  
   export default {
     data() {
       return {
@@ -161,7 +167,28 @@
         this.$refs.ruleForm.validate((valid) => {
           this.form.data.commodity_size = parseFloat(this.form.data.commodity_size)
           if (valid) {
-            this.$store.dispatch('comodity/create', this.form.data)
+            // File Upload using Cloudinary API
+            var formData = new FormData()
+            var imageUrl = ''
+            formData.append('file', file)
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+            axios({
+              url: CLOUDINARY_URL,
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              data: formData
+            }).then(function(res) {
+              this.form.data.image = res.data.secure_url
+              console.log('file uploaded')
+            }).catch(function(err) {
+              console.log(err)
+            })
+            console.log(imageUrl)
+            this.form.data.image = imageUrl
+            console.log(this.form.data)
+            // this.$store.dispatch('comodity/create', this.form.data)
           }
         })
       },
@@ -171,6 +198,11 @@
       },
       removeAlias (index) {
         this.form.data.commodity_alias.splice(index, 1)
+      },
+      onFileSelected(event) {
+        file = event.target.files[0]
+        console.log(this.form.data)
+        document.getElementById('imageName').innerHTML = 'File : ' + file.name
       }
     },
     computed: mapState({
