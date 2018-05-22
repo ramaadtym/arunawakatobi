@@ -111,7 +111,23 @@ import axios from 'axios'
 var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload'
 var CLOUDINARY_UPLOAD_PRESET = 'wbwuqzlz'
 var file = null
-  
+function uploadImage() {
+    var formData = new FormData()
+    formData.append('file', file)
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+    axios({
+      url: CLOUDINARY_URL,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: formData
+    }).then(function(res) {
+      return res.data.secure_url //edankeun lur
+    }).catch(function(err) {
+      return err
+    })
+  }
   export default {
     data() {
       return {
@@ -168,25 +184,9 @@ var file = null
           this.form.data.commodity_size = parseFloat(this.form.data.commodity_size)
           if (valid) {
             // File Upload using Cloudinary API
-            var formData = new FormData()
-            var imageUrl = ''
-            formData.append('file', file)
-            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-            axios({
-              url: CLOUDINARY_URL,
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              },
-              data: formData
-            }).then(function(res) {
-              this.form.data.image = res.data.secure_url
-              console.log('file uploaded')
-            }).catch(function(err) {
-              console.log(err)
-            })
-            console.log(imageUrl)
-            this.form.data.image = imageUrl
+            var image = uploadImage()
+            this.form.data.image = image
+            console.log(image)
             console.log(this.form.data)
             // this.$store.dispatch('comodity/create', this.form.data)
           }
