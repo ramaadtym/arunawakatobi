@@ -107,7 +107,11 @@
 <script>
   import vAvatar from 'vue-avatar/src/Avatar.vue'
   import { mapState } from 'vuex'
+  import comodityService from '../../vuxs/services/comodity'
 import axios from 'axios'
+// import cloudinary from 'cloudinary'
+import router from '../../routers/index'
+
 var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload'
 var CLOUDINARY_UPLOAD_PRESET = 'wbwuqzlz'
 var file = null
@@ -180,7 +184,8 @@ var file = null
               data: formData
             }).then(function(res) {
               self.form.data.image = res.data.secure_url
-              this.$store.dispatch('comodity/create', self.form.data)
+              comodityService.createComodity(self.form.data)
+              //refresh abis ini
             }).catch(function(err) {
               return err
             })
@@ -196,7 +201,6 @@ var file = null
       },
       onFileSelected(event) {
         file = event.target.files[0]
-        console.log(this.form.data)
         document.getElementById('imageName').innerHTML = 'File : ' + file.name
       }
     },

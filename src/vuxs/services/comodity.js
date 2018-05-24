@@ -21,8 +21,14 @@ export default {
     })
   },
   updateComodity (id, data) {
-    return endpoint.put(id, data).then(res => {
+    return endpoint.put(id, data)
+    .then(res => {
       return res.data
+    })
+  },
+  deleteComodity (id) {
+    return endpoint.delete(id).then(res => {
+      return res
     })
   }
 }
