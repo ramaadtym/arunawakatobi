@@ -13,11 +13,13 @@
   "dependencies": {
     "axios": "^0.15.3",
     "chart.js": "^2.5.0",
+    "cloudinary": "^1.11.0",
     "element-datepicker": "^1.0.0",
     "element-ui": "^1.0.0",
     "es6-promise": "^4.1.0",
     "faker": "^4.1.0",
     "file-saver": "^1.3.3",
+    "fs": "0.0.1-security",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.11",
     "vue": "^2.1.10",
@@ -27,6 +29,7 @@
     "vue-i18n": "^5.0.3",
     "vue-router": "^2.2.0",
     "vue2-google-maps": "^0.7.9",
+    "vuetify-cloudinary-upload": "^0.1.1",
     "vuex": "^2.1.1",
     "vuex-router-sync": "^4.1.0",
     "xlsx": "^0.11.13"
