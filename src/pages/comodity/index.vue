@@ -33,6 +33,8 @@
                 <router-link :to="{name: 'commodity-detail', params: {id: item.item.id}}">
                   <vx-button icon="la la-bars" variant="primary" light solid outline></vx-button>
                 </router-link>
+                  <vx-button icon="la la-trash" v-on:click="comodityDel(item.item.id)" variant="danger" light solid outline></vx-button>
+                
               </template>
             </vx-table>
             <div style="padding: 20px 20px;">
@@ -106,6 +108,10 @@
     methods: {
       details (item) {
         alert(JSON.stringify(item))
+      },
+      comodityDel(id) {
+        comodityService.deleteComodity(id)
+        window.location.reload()
       },
       renderData (tbl) {
       //   {

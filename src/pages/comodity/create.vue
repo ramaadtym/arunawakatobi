@@ -66,9 +66,11 @@
                       <h5 slot="header" class="my-0">
                        Tambah Gambar
                       </h5>
-                        <button type="submit" class="btn btn-primary btn-sm">
-                        Tambah Gambar
-                      </button>
+                      <div class="text-center p-3">
+                       <label class="btn btn-primary btn-sm">
+                            <input type="file" @change="onSelect" name="com_img" style="display:none;"> Tambah Gambar
+                        </label>
+                      </div>  
                   </vx-card>
                   <vx-card>
                     <h5 slot="header" class="my-0">
