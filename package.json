@@ -14,6 +14,7 @@
     "axios": "^0.15.3",
     "chart.js": "^2.5.0",
     "cloudinary": "^1.11.0",
+    "cloudinary-core": "^2.5.0",
     "element-datepicker": "^1.0.0",
     "element-ui": "^1.0.0",
     "es6-promise": "^4.1.0",

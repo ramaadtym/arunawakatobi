@@ -67,8 +67,9 @@
                        Tambah Gambar
                       </h5>
                       <div class="text-center p-3">
+                        <div id="imageName"></div>
                        <label class="btn btn-primary btn-sm">
-                            <input type="file" @change="onSelect" name="com_img" style="display:none;"> Tambah Gambar
+                            <input type="file" @change="onFileSelected" accept="image/*" name="com_img" style="display:none;"> Tambah Gambar
                         </label>
                       </div>  
                   </vx-card>
@@ -107,6 +108,18 @@
 <script>
   import vAvatar from 'vue-avatar/src/Avatar.vue'
   import { mapState } from 'vuex'
+  import axios from 'axios'
+  // import cloudinary from 'cloudinary'
+  import comodityService from '../../vuxs/services/comodity'
+  // cloudinary.config({
+  //   cloud_name: 'dk2mkgzg3',
+  //   api_key: '865121419938338',
+  //   api_secret: 'r_m3k8qmc5VOGxrdIQTNfq3Q-Lk'
+  // })
+
+var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload'
+var CLOUDINARY_UPLOAD_PRESET = 'wbwuqzlz'
+var file = null
 
   export default {
     data() {
@@ -163,7 +176,28 @@
         this.$refs.ruleForm.validate((valid) => {
           this.form.data.commodity_size = parseFloat(this.form.data.commodity_size)
           if (valid) {
-            this.$store.dispatch('comodity/create', this.form.data)
+            var self = this
+            // File Upload using Cloudinary API
+            var formData = new FormData()
+            formData.append('file', file)
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+            axios({
+              url: CLOUDINARY_URL,
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              data: formData
+            }).then(function(res) {
+              self.form.data.image = res.data.secure_url
+              comodityService.createComodity(self.form.data)
+            // refresh abis ini
+            }).catch(function(err) {
+              return err
+            })
+            console.log(this.form.data)
+            // this.$store.dispatch('comodity/create', this.form.data)
+            this.$router.push('/comodity')
           }
         })
       },
@@ -173,6 +207,10 @@
       },
       removeAlias (index) {
         this.form.data.commodity_alias.splice(index, 1)
+      },
+      onFileSelected(event) {
+        file = event.target.files[0]
+        document.getElementById('imageName').innerHTML = 'File : ' + file.name
       }
     },
     computed: mapState({
