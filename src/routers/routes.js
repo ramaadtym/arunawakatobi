@@ -36,6 +36,13 @@ const routes = [
         meta: {description: 'Daftar UPTD'}
       },
       {
+        path: 'uptd/create',
+        name: 'uptd-create',
+        component: resolve => require(['../pages/uptd/create.vue'], resolve),
+        beforeEnter: SuperAdmin,
+        meta: {description: 'Tambah UPTD'}
+      },
+      {
         path: 'uptd/detail/:id',
         name: 'uptd-detail',
         component: resolve => require(['../pages/uptd/detail.vue'], resolve),
