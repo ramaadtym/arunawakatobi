@@ -106,6 +106,7 @@
   </vx-container>
 </template>
 <script>
+  import Vue from 'vue'
   import vAvatar from 'vue-avatar/src/Avatar.vue'
   import { mapState } from 'vuex'
   import axios from 'axios'
@@ -190,16 +191,27 @@ var file = null
               data: formData
             }).then(function(res) {
               self.form.data.image = res.data.secure_url
-              comodityService.createComodity(self.form.data)
+              comodityService.createComodity(self.form.data).then(function(res) {
+                self.$router.push('/comodity')
+              })
+              // this.getRespon()
             // refresh abis ini
             }).catch(function(err) {
               return err
             })
-            console.log(this.form.data)
-            // this.$store.dispatch('comodity/create', this.form.data)
-            this.$router.push('/comodity')
           }
         })
+      },
+      async getRespon () {
+        let response
+        try {
+          response = await Vue.http.get('https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload')
+        } catch (ex) {
+          // Handle error
+          return
+        }
+        // Handle success
+        response.body
       },
       addAlias (e) {
         e.preventDefault()

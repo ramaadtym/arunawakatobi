@@ -27,7 +27,7 @@
                 <span v-if="item.item.commodity_alias">{{ item.item.commodity_alias[0].alias_name }}</span>
               </template>
               <template slot="url_image" scope="item">
-                <img v-if="item.item.image" :src="item.item.image"/>
+                <img style="width:13rem;" v-if="item.item.image" :src="item.item.image"/>
               </template>
               <template slot="actions" scope="item">
                 <router-link :to="{name: 'commodity-detail', params: {id: item.item.id}}">
@@ -110,8 +110,9 @@
         alert(JSON.stringify(item))
       },
       comodityDel(id) {
-        comodityService.deleteComodity(id)
-        window.location.reload()
+        comodityService.deleteComodity(id).then(function(res) {
+          location.reload()
+        })
       },
       renderData (tbl) {
       //   {
