@@ -30,13 +30,19 @@
                   </vx-card>
                   <vx-card>
                     <h5 slot="header" class="my-0">
-                      Dokumen User
+                      Data Kelautan
                     </h5>
-                    <vx-form-item label="No.SIPI" prop="birth_place" :error="errors.birth_place">
-                      <vx-input name="birth_place" v-model="form.data.birth_place" id="birth_place"></vx-input>
+                    <vx-form-item label="No.SIPI" prop="no_sipi" :error="errors.no_sipi">
+                      <vx-input name="no_sipi" v-model="form.data.no_sipi" id="sipi"></vx-input>
                     </vx-form-item>
-                    <vx-form-item label="No.SIUP" prop="birth_place" :error="errors.birth_place">
-                      <vx-input name="birth_place" v-model="form.data.birth_place" id="birth_place"></vx-input>
+                    <vx-form-item label="No.SIUP" prop="no_siup" :error="errors.no_siup">
+                      <vx-input name="no_siup" v-model="form.data.no_siup" id="siup"></vx-input>
+                    </vx-form-item>
+                    <vx-form-item label="Jenis Kapal" prop="ship_type" :error="errors.ship_type">
+                      <vx-input name="ship_type" v-model="form.data.ship_type" id="ship_type"></vx-input>
+                    </vx-form-item>
+                    <vx-form-item label="Alat Tangkap" prop="ship_type" :error="errors.tools">
+                      <vx-input name="tools" v-model="form.data.tools" id="tools"></vx-input>
                     </vx-form-item>
                     <template slot="footer">
                       <vx-button variant="primary" light solid outline to="/commodity">Batal</vx-button>
