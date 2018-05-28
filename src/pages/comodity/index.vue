@@ -33,7 +33,7 @@
                 <router-link :to="{name: 'commodity-detail', params: {id: item.item.id}}">
                   <vx-button icon="la la-bars" variant="primary" light solid outline></vx-button>
                 </router-link>
-                  <vx-button icon="la la-trash" v-on:click="comodityDel(item.item.id)" variant="danger" light solid outline></vx-button>
+                  <vx-button icon="la la-trash" v-on:click="comodityDel(item.item.id,item.item.image)" variant="danger" light solid outline></vx-button>
                 
               </template>
             </vx-table>
@@ -50,7 +50,7 @@
   import vAvatar from 'vue-avatar/src/Avatar.vue'
   import table from 'vx/src/mixins/table'
   import comodityService from '../../vuxs/services/comodity'
-
+  import cloudinaryService from '../../vuxs/services/cloudinary'
   export default {
     mixins: [table],
     data () {
@@ -109,9 +109,16 @@
       details (item) {
         alert(JSON.stringify(item))
       },
-      comodityDel(id) {
-        comodityService.deleteComodity(id).then(function(res) {
-          location.reload()
+      comodityDel(id, publicId) {
+        var parsedPublicId = publicId.match(/\w+.jpg+/)[0].split('.')[0]
+        console.log(parsedPublicId)
+        cloudinaryService.destroy(parsedPublicId).then(function(res) {
+          console.log(res)
+          if (res.result === 'ok') {
+            comodityService.deleteComodity(id).then(function(res) {
+              location.reload()
+            })
+          }
         })
       },
       renderData (tbl) {

@@ -16,7 +16,8 @@ export default {
     })
   },
   upload (file) {
-    return endpoint.uploader.upload(file, function(res){
+    return endpoint.uploader.upload(file, function(err, res) {
+      console.log(err)
       return res
     })
   }
