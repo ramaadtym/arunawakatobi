@@ -12,8 +12,8 @@
                     <h5 slot="header" class="my-0">
                       Info User
                     </h5>
-                    <vx-form-item label="Nama User" prop="user_name" :error="errors.user_name">
-                      <vx-input name="user_name" v-model="form.data.user_name" id="user_name"></vx-input>
+                    <vx-form-item label="Nama User" prop="full_name" :error="errors.full_name">
+                      <vx-input name="fullr_name" v-model="form.data.full_name" id="full_name"></vx-input>
                     </vx-form-item>
                     <vx-form-item label="No. Telp" prop="phone" :error="errors.phone">
                       <vx-input name="phone" v-model="form.data.phone" id="phone"></vx-input>
@@ -32,6 +32,9 @@
                     <h5 slot="header" class="my-0">
                       Data Kelautan
                     </h5>
+                    <vx-form-item label="Jenis Nelayan" prop="no_sipi" :error="errors.fisherman_type">
+                      <vx-input name="fisherman_type" v-model="form.data.fisherman_type" id="fisherman_type"></vx-input>
+                    </vx-form-item>
                     <vx-form-item label="No.SIPI" prop="no_sipi" :error="errors.no_sipi">
                       <vx-input name="no_sipi" v-model="form.data.no_sipi" id="sipi"></vx-input>
                     </vx-form-item>
@@ -61,15 +64,10 @@
   </vx-container>
 </template>
 <script>
-  import Vue from 'vue'
   import vAvatar from 'vue-avatar/src/Avatar.vue'
   import { mapState } from 'vuex'
-  import axios from 'axios'
-  import comodityService from '../../vuxs/services/comodity'
-var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload'
-var CLOUDINARY_UPLOAD_PRESET = 'wbwuqzlz'
-var file = null
-
+  // import axios from 'axios'
+  import uptdService from '../../vuxs/services/uptd_create'
   export default {
     data() {
       return {
@@ -88,23 +86,19 @@ var file = null
         form: {
           submitted: false,
           rules: {
-            comodity_name: [
+            full_name: [
               {
                 required: true,
-                message: 'Harap masukkan nama komoditas terlebih dahulu',
+                message: 'Harap masukkan nama pengguna terlebih dahulu',
                 trigger: 'blur'
               }
             ]
           },
           data: {
-            commodity_name: '',
-            commodity_size: '',
-            size_type: '',
-            image: '',
-            description: '',
-            commodity_alias: [
-              // {alias_name: '', description: ''}
-            ]
+            full_name: '',
+            phone: '',
+            birth_place: '',
+            birth_date: ''
           }
         }
       }
@@ -123,54 +117,16 @@ var file = null
     methods: {
       submitForm () {
         this.$refs.ruleForm.validate((valid) => {
-          this.form.data.commodity_size = parseFloat(this.form.data.commodity_size)
+          // console.log(this.form.data)
           if (valid) {
             var self = this
-            // File Upload using Cloudinary API
-            var formData = new FormData()
-            formData.append('file', file)
-            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-            axios({
-              url: CLOUDINARY_URL,
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              },
-              data: formData
-            }).then(function(res) {
-              self.form.data.image = res.data.secure_url
-              comodityService.createComodity(self.form.data).then(function(res) {
-                self.$router.push('/comodity')
-              })
-              // this.getRespon()
-            // refresh abis ini
-            }).catch(function(err) {
-              return err
+            uptdService.createUPTDUsers(self.form.data).then(function(res) {
+              if (res.status === 'success') {
+                self.$router.push('/uptd')
+              }
             })
           }
         })
-      },
-      async getRespon () {
-        let response
-        try {
-          response = await Vue.http.get('https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload')
-        } catch (ex) {
-          // Handle error
-          return
-        }
-        // Handle success
-        response.body
-      },
-      addAlias (e) {
-        e.preventDefault()
-        this.form.data.commodity_alias.push({alias_name: '', description: ''})
-      },
-      removeAlias (index) {
-        this.form.data.commodity_alias.splice(index, 1)
-      },
-      onFileSelected(event) {
-        file = event.target.files[0]
-        document.getElementById('imageName').innerHTML = 'File : ' + file.name
       }
     },
     computed: mapState({
