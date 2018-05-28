@@ -110,18 +110,11 @@
   import vAvatar from 'vue-avatar/src/Avatar.vue'
   import { mapState } from 'vuex'
   import axios from 'axios'
-  // import cloudinary from 'cloudinary'
+  import cloudinaryService from '../../vuxs/services/cloudinary'
   import comodityService from '../../vuxs/services/comodity'
-  // cloudinary.config({
-  //   cloud_name: 'dk2mkgzg3',
-  //   api_key: '865121419938338',
-  //   api_secret: 'r_m3k8qmc5VOGxrdIQTNfq3Q-Lk'
-  // })
-
-var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload'
-var CLOUDINARY_UPLOAD_PRESET = 'wbwuqzlz'
-var file = null
-
+  var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload'
+  var CLOUDINARY_UPLOAD_PRESET = 'wbwuqzlz'
+  var file = null
   export default {
     data() {
       return {
@@ -192,7 +185,13 @@ var file = null
             }).then(function(res) {
               self.form.data.image = res.data.secure_url
               comodityService.createComodity(self.form.data).then(function(res) {
-                self.$router.push('/comodity')
+                if (res.status === 'success') {
+                  self.$router.push('/comodity')
+                } else {
+                  cloudinaryService.destroy(res.public_id).then(function(res) {
+                    alert('Upload Gagal')
+                  })
+                }
               })
               // this.getRespon()
             // refresh abis ini

@@ -5,6 +5,13 @@ if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 }
 
+// var cloudinaryCredentials = {
+//   cloud_name: 'dk2mkgzg3',
+//   api_key: '865121419938338',
+//   api_secret: 'r_m3k8qmc5VOGxrdIQTNfq3Q-Lk'
+// };
+
+// var cloudinary = require('cloudinary');
 var opn = require('opn')
 var path = require('path')
 var express = require('express')

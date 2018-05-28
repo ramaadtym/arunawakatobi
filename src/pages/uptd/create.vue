@@ -41,19 +41,13 @@
     </div>
   </vx-container>
 </template>
+<script src="node_modules/cloudinary/cloudinary" type="text/javascript"></script>
 <script>
   import Vue from 'vue'
   import vAvatar from 'vue-avatar/src/Avatar.vue'
   import { mapState } from 'vuex'
   import axios from 'axios'
-  // import cloudinary from 'cloudinary'
   import comodityService from '../../vuxs/services/comodity'
-  // cloudinary.config({
-  //   cloud_name: 'dk2mkgzg3',
-  //   api_key: '865121419938338',
-  //   api_secret: 'r_m3k8qmc5VOGxrdIQTNfq3Q-Lk'
-  // })
-
 var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload'
 var CLOUDINARY_UPLOAD_PRESET = 'wbwuqzlz'
 var file = null
@@ -157,6 +151,7 @@ var file = null
         this.form.data.commodity_alias.splice(index, 1)
       },
       onFileSelected(event) {
+        alert('hohoho')
         file = event.target.files[0]
         document.getElementById('imageName').innerHTML = 'File : ' + file.name
       }
@@ -166,6 +161,7 @@ var file = null
       submitted: state => state.Form.submitted
     })
   }
+  
 </script>
 <style>
   .input-group-addon {
