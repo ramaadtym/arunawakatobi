@@ -110,7 +110,7 @@
   import vAvatar from 'vue-avatar/src/Avatar.vue'
   import { mapState } from 'vuex'
   import axios from 'axios'
-  // import cloudinary from 'cloudinary'
+  //  import cloudinary from 'cloudinary'
   import comodityService from '../../vuxs/services/comodity'
   // cloudinary.config({
   //   cloud_name: 'dk2mkgzg3',

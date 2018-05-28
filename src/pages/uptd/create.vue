@@ -15,15 +15,28 @@
                     <vx-form-item label="Nama User" prop="user_name" :error="errors.user_name">
                       <vx-input name="user_name" v-model="form.data.user_name" id="user_name"></vx-input>
                     </vx-form-item>
-                    <vx-form-item label="Tgl Registrasi">
-                    	<input type="date" class="form-control" name="reg_date" id="reg_date">
+                    <vx-form-item label="No. Telp" prop="phone" :error="errors.phone">
+                      <vx-input name="phone" v-model="form.data.phone" id="phone"></vx-input>
                     </vx-form-item>
-                     <vx-form-item label="Status">
-                    	<select class="form-control" id="sel1">
-                    	    <option value="0">- Pilih Status -</option>
-                    	    <option value="aktif">Aktif</option>
-                    	    <option value="tidak aktif">Tidak Aktif</option>
-                    	  </select>
+                    <vx-form-item label="Tempat Lahir" prop="birth_place" :error="errors.birth_place">
+                      <vx-input name="birth_place" v-model="form.data.birth_place" id="birth_place"></vx-input>
+                    </vx-form-item>
+                    <vx-form-item label="Tanggal Lahir" prop="birth_date" :error="errors.birth_date">
+                      <input type="date" name="birth_date" class="form-control" v-model="form.data.birth_date" id="birth_date">
+                    </vx-form-item>
+                    <vx-form-item label="Alamat" prop="address" :error="errors.address">
+                      <textarea name="address" class="form-control" v-model="form.data.address" id="address"></textarea>
+                    </vx-form-item>
+                  </vx-card>
+                  <vx-card>
+                    <h5 slot="header" class="my-0">
+                      Dokumen User
+                    </h5>
+                    <vx-form-item label="No.SIPI" prop="birth_place" :error="errors.birth_place">
+                      <vx-input name="birth_place" v-model="form.data.birth_place" id="birth_place"></vx-input>
+                    </vx-form-item>
+                    <vx-form-item label="No.SIUP" prop="birth_place" :error="errors.birth_place">
+                      <vx-input name="birth_place" v-model="form.data.birth_place" id="birth_place"></vx-input>
                     </vx-form-item>
                     <template slot="footer">
                       <vx-button variant="primary" light solid outline to="/commodity">Batal</vx-button>
@@ -46,14 +59,7 @@
   import vAvatar from 'vue-avatar/src/Avatar.vue'
   import { mapState } from 'vuex'
   import axios from 'axios'
-  // import cloudinary from 'cloudinary'
   import comodityService from '../../vuxs/services/comodity'
-  // cloudinary.config({
-  //   cloud_name: 'dk2mkgzg3',
-  //   api_key: '865121419938338',
-  //   api_secret: 'r_m3k8qmc5VOGxrdIQTNfq3Q-Lk'
-  // })
-
 var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload'
 var CLOUDINARY_UPLOAD_PRESET = 'wbwuqzlz'
 var file = null
