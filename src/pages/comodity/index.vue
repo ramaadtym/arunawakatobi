@@ -30,10 +30,13 @@
                 <img style="width:13rem;" v-if="item.item.image" :src="item.item.image"/>
               </template>
               <template slot="actions" scope="item">
-                <router-link :to="{name: 'commodity-detail', params: {id: item.item.id}}">
+                <!-- <router-link :to="{name: 'detail-comodity', params: {id: item.item.id}}">
                   <vx-button icon="la la-bars" variant="primary" light solid outline></vx-button>
-                </router-link>
+                </router-link> -->
                   <vx-button icon="la la-trash" v-on:click="comodityDel(item.item.id,item.item.image)" variant="danger" light solid outline></vx-button>
+                  <router-link :to="{name: 'edit-comodity', params: { id: item.item.id }}">
+                  <vx-button icon="la la-edit" variant="primary" primary solid outline></vx-button>
+                  </router-link>
                 
               </template>
             </vx-table>
@@ -151,12 +154,14 @@
       // }
         let that = this
         comodityService.getComodity(this.apiParam).then(payload => {
+          console.log(this.apiParam)
           console.log(payload, '<<< payload')
           that.table.total = (payload.data) ? payload.total : 0
           tbl.items = (payload.data) ? payload.data : []
         })
       }
     }
+
   }
 </script>
 

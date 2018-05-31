@@ -71,6 +71,20 @@ const routes = [
         meta: {description: 'Tambah Komoditas'}
       },
       {
+        path: 'comodity/edit/:id',
+        name: 'edit-comodity',
+        component: resolve => require(['../pages/comodity/edit.vue'], resolve),
+        beforeEnter: SuperAdmin,
+        meta: {description: 'Edit Komoditas'}
+      },
+      {
+        path: 'comodity/detail',
+        name: 'detail-comodity',
+        component: resolve => require(['../pages/comodity/edit.vue'], resolve),
+        beforeEnter: SuperAdmin,
+        meta: {description: 'Edit Komoditas'}
+      },
+      {
         path: 'report',
         name: 'report',
         component: resolve => require(['../pages/report/index.vue'], resolve),
