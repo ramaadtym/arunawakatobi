@@ -41,7 +41,7 @@
               {{ item.item.is_active? 'Aktif' : 'Tidak Aktif' }}
             </template>
             <template slot="actions" scope="item">
-              <router-link :to="{name: 'uptd-detail', params: { id: item.item.id }}">
+              <router-link :to="{name: 'uptd-detail-users', params: { id: item.item.id }}">
                 <vx-button icon="la la-bars" variant="primary" light solid outline></vx-button>
               </router-link>
               <vx-button @click="$root.$emit('show::modal','modal'+ item.item.id)" v-show="item.item.is_active === 1 && isSuperAdmin" icon="la la-times" variant="danger" solid outline></vx-button>

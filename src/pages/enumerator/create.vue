@@ -73,7 +73,7 @@
   import {mapState} from 'vuex'
   import EntityService from '../../vuxs/services/entity'
   import RegencyService from '../../vuxs/services/regency'
-  import GeoLocation from '../../services/geocoder'
+  // import GeoLocation from '../../services/geocoder'
   export default {
     data () {
       return {
@@ -200,7 +200,7 @@
         this.form.input.full_name = this.form.data.full_name
         this.form.input.address = this.form.data.address
         this.form.input.regency_id = this.form.data.regency.id
-        this.form.input.latlng = this.markers[0].position.lat + ',' + this.markers[0].position.lng
+        // this.form.input.latlng = this.markers[0].position.lat + ',' + this.markers[0].position.lng
         this.form.input.avatar = this.form.data.avatar
         this.form.input.description = this.form.data.description
         this.form.input.email = this.form.data.email
@@ -220,56 +220,56 @@
       updateMapCenter(which, value) { // eslint-disable-line no-unused-vars
         this.center = _.clone(this.reportedCenter)
       },
-      addMarker: function addMarker () {
-        this.lastId++
-        if (this.lastId === 3) {
-          this.markers.splice(this.markers.indexOf(2), 1)
-          this.lastId = 2
-          this.markers.push({
-            id: this.lastId,
-            position: {},
-            opacity: 1,
-            draggable: true,
-            icon: '/static/img/rsz_pin.png',
-            enabled: true,
-            ifw: true,
-            dragended: 0,
-            address_components: {},
-            ifw2text: 'Pilih Pinpoin Alamat'
-          })
-          return this.markers[this.markers.length - 1]
-        } else {
-          this.markers.push({
-            id: this.lastId,
-            position: {},
-            opacity: 1,
-            draggable: true,
-            icon: '/static/img/rsz_pin.png',
-            enabled: true,
-            ifw: true,
-            dragended: 0,
-            address_components: {},
-            ifw2text: 'Pilih Pinpoin Alamat'
-          })
-          return this.markers[this.markers.length - 1]
-        }
-      },
-      selectRegion(region) {
-        if (typeof region.name !== 'undefined') {
-          var locator = GeoLocation.getLangLat(region.name)
-          if (locator) {
-            let that = this
-            locator.then(function (data) {
-              var marker = that.addMarker()
-              marker.position.lat = data.geometry.location.lat
-              marker.position.lng = data.geometry.location.lng
-              marker.address_components = data.address_components
-              that.center = marker.position
-              that.zoom = 15
-            })
-          }
-        }
-      },
+      // addMarker: function addMarker () {
+      //   this.lastId++
+      //   if (this.lastId === 3) {
+      //     this.markers.splice(this.markers.indexOf(2), 1)
+      //     this.lastId = 2
+      //     this.markers.push({
+      //       id: this.lastId,
+      //       position: {},
+      //       opacity: 1,
+      //       draggable: true,
+      //       icon: '/static/img/rsz_pin.png',
+      //       enabled: true,
+      //       ifw: true,
+      //       dragended: 0,
+      //       address_components: {},
+      //       ifw2text: 'Pilih Pinpoin Alamat'
+      //     })
+      //     return this.markers[this.markers.length - 1]
+      //   } else {
+      //     this.markers.push({
+      //       id: this.lastId,
+      //       position: {},
+      //       opacity: 1,
+      //       draggable: true,
+      //       icon: '/static/img/rsz_pin.png',
+      //       enabled: true,
+      //       ifw: true,
+      //       dragended: 0,
+      //       address_components: {},
+      //       ifw2text: 'Pilih Pinpoin Alamat'
+      //     })
+      //     return this.markers[this.markers.length - 1]
+      //   }
+      // },
+      // selectRegion(region) {
+      //   if (typeof region.name !== 'undefined') {
+      //     var locator = GeoLocation.getLangLat(region.name)
+      //     if (locator) {
+      //       let that = this
+      //       locator.then(function (data) {
+      //         var marker = that.addMarker()
+      //         marker.position.lat = data.geometry.location.lat
+      //         marker.position.lng = data.geometry.location.lng
+      //         marker.address_components = data.address_components
+      //         that.center = marker.position
+      //         that.zoom = 15
+      //       })
+      //     }
+      //   }
+      // },
       update(field, event) {
         if (field === 'reportedCenter') {
           // N.B. It is dangerous to update this.center
@@ -291,13 +291,13 @@
           this.$set(this, field, event)
         }
       },
-      updateChild(object, field, event) {
-        // ini ditrigger saat marker moved
-        if (field === 'position') {
-          object.position = {
-            lat: event.lat(),
-            lng: event.lng()
-          }
+      // updateChild(object, field, event) {
+      //   // ini ditrigger saat marker moved
+      //   if (field === 'position') {
+      //     object.position = {
+      //       lat: event.lat(),
+      //       lng: event.lng()
+      //     }
           // get address formated from lang lat, don't delete in case we need this function
           // used reverse geocoder method by google maps
 //          var address = GeoLocation.getAddress(object.position.lng, object.position.lat)
@@ -307,8 +307,8 @@
 //              that.formatted_address = data.formatted_address
 //            })
 //          }
-        }
-      },
+      //   }
+      // },
       remoteMethod(query) {
         if (query !== '') {
           this.loading = true

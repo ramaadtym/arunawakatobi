@@ -21,6 +21,11 @@ export default {
       return res
     })
   },
+  getUPTDUsersDetail (id, params) {
+    return endpoint.request('get', id + '/fisherman', {params}).then(res => {
+      return res
+    })
+  },
   getUPTDDetail (id, params) {
     return endpoint.show(id, params)
   },

@@ -38,6 +38,7 @@ const routes = [
       {
         path: 'uptd/create',
         name: 'uptd-create',
+        // component: resolve => require(['../pages/enumerator/create.vue'], resolve),
         component: resolve => require(['../pages/uptd/create.vue'], resolve),
         beforeEnter: SuperAdmin,
         meta: {description: 'Tambah UPTD'}
@@ -48,6 +49,13 @@ const routes = [
         component: resolve => require(['../pages/uptd/detail.vue'], resolve),
         beforeEnter: SuperAdmin,
         meta: {description: 'Detail UPTD'}
+      },
+      {
+        path: 'uptd/detail-users/:id',
+        name: 'uptd-detail-users',
+        component: resolve => require(['../pages/uptd/detail_users.vue'], resolve),
+        beforeEnter: SuperAdmin,
+        meta: {description: 'Detail Users UPTD'}
       },
       {
         path: 'management-transaction',
