@@ -21,7 +21,8 @@
 <script>
   import table from 'vx/src/mixins/table'
   import InfoBoxCount from '../../components/InfoBoxCount'
-  import uptdService from '../../vuxs/services/uptd'
+  // import uptdService from '../../vuxs/services/uptd'
+  import fishermanService from '../../vuxs/services/fisherman'
   import session from '../../services/session'
 
   export default {
@@ -113,8 +114,11 @@
         }
       },
       fetchDetailUPTD () {
-        uptdService.getUPTDDetail(this.$route.params.id).then(res => {
-          this.uptd = res.data
+        // uptdService.getUPTDDetail(this.$route.params.id).then(res => {
+        // })
+        fishermanService.getFishermanDetail(this.$route.params.id).then(res => {
+          this.uptd = res.Fisherman
+          // console.log(res.Fisherman)
         })
       },
       changeType(type) {

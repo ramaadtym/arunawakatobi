@@ -98,7 +98,8 @@
 </template>
 <script>
   import {mapState} from 'vuex'
-  import EntityService from '../../vuxs/services/entity'
+  // import EntityService from '../../vuxs/services/entity'
+  import FishermanService from '../../vuxs/services/fisherman'
   export default {
     data () {
       return {
@@ -172,9 +173,14 @@
     },
     created () {
       let that = this
-      EntityService.getEntityDetail(this.$route.params.id).then(res => {
-        that.form.data = res
+      // EntityService.getEntityDetail(this.$route.params.id).then(res => {
+      //   // that.form.data = res
+      //   console.log(res)
+      // })
+      FishermanService.getFishermanDetail(this.$route.params.id).then(res => {
+        console.log(res)
       })
+      
     },
     computed: mapState({
       errors: state => state.Form.errors,
