@@ -19,7 +19,7 @@
           </div>
           <div class="ks-filters">
             <div class="btn-group" v-if="isSuperAdmin">
-              <vx-button variant="primary" to="/uptd/create" block>Tambah User</vx-button>
+              <vx-button variant="primary" block @click="addNelayan()">Tambah Nelayan</vx-button>
             </div>
             <div class="btn-group">
               <vx-table-columns :columns="table.fields"></vx-table-columns>
@@ -184,6 +184,9 @@
     methods: {
       details (item) {
         alert(JSON.stringify(item))
+      },
+      addNelayan () {
+        this.$router.push('/uptd/create/' + this.$route.params.id)
       },
       renderData (tbl) {
         uptdService.getUPTDUsers(this.$route.params.id, {...this.apiParam}).then(payload => {

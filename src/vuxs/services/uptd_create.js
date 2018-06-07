@@ -7,25 +7,28 @@
 //
 import Api from '../../services/api'
 
-let endpoint = new Api('fisherman-user')
+let endpoint = new Api('fisherman-user/delegateFisherman')
 
 export default {
   // Retrive current user info
-  getUPTD (params) {
-    return endpoint.get(params).then(res => {
-      return res
-    })
-  },
-  getUPTDUsers (id, params) {
-    return endpoint.request('get', id + '/fisherman', {params}).then(res => {
-      return res
-    })
-  },
+  // getUPTD (params) {
+  //   return endpoint.get(params).then(res => {
+  //     return res
+  //   })
+  // },
   getUPTDDetail (id, params) {
     return endpoint.show(id, params)
   },
-
+  showUPTD (id) {
+    return endpoint.show(id).then(res => {
+      return res.data
+    })
+  },
   // Create new UPTD
+  // createUPTDUsers (data) {
+  //   return endpoint.post(data).then(res => {
+  //     return res
+  //   })
   createUPTDUsers (data) {
     return endpoint.post(data).then(res => {
       return res
