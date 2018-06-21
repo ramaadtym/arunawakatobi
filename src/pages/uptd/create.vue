@@ -80,7 +80,7 @@
   import {mapState} from 'vuex'
   // import EntityService from '../../vuxs/services/entity'
   import RegencyService from '../../vuxs/services/regency'
-  import uptdService from '../../vuxs/services/uptd_create'
+  // import uptdService from '../../vuxs/services/uptd_create'
   // import GeoLocation from '../../services/geocoder'
   export default {
     data () {
@@ -201,32 +201,16 @@
     },
     methods: {
       onSubmit () {
-        // get input data from form.input
-        // this.form.input.entity = this.form.data.entity.id
-        // this.form.input.user_group = this.form.data.user_group
-        // this.form.input.full_name = this.form.data.full_name
-        // this.form.input.ship_name = this.form.data.ship_name
-        // this.form.input.ship_type = this.form.data.ship_type
-        // this.form.input.address = this.form.data.address
-        // this.form.input.regency_id = this.form.data.regency.id
-        // this.form.input.latlng = this.markers[0].position.lat + ',' + this.markers[0].position.lng
-        // this.form.input.avatar = this.form.data.avatar
-        // this.form.input.description = this.form.data.description
-        // this.form.input.email = this.form.data.email
-        // this.form.input.is_active = this.form.data.is_active
-        // this.form.input.password = this.form.data.password
-        // this.form.input.username = this.form.data.username
-        // this.form.input.phone = this.form.data.phone
         this.$refs.ruleForm.validate((valid) => {
           if (valid) {
             var self = this
             // this.$store.dispatch('user/create', this.form.input)
-            uptdService.createUPTDUsers(self.form.data).then(function(res) {
-              if (res.status === 'success') {
-                // self.$router.push('../detail/' + self.$route.params.id)
-                console.log(res)
-              }
-            })
+            // uptdService.createUPTDUsers(self.form.data).then(function(res) {
+            //   if (res.status === 'success') {
+            //     // self.$router.push('../detail/' + self.$route.params.id)
+            //     // console.log(res)
+            //   }
+            // })
             console.log(self.form.data)
           }
         })
