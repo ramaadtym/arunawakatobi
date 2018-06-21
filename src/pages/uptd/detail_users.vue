@@ -1,5 +1,5 @@
 <template>
-	<vx-container :title="'Detail User'">
+	<vx-container :title="'Detail User: '+ dataUser.full_name">
 		<vx-breadcrumb :items="breadcrumbLink"></vx-breadcrumb>
 		<div class="container-fluid ks-rows-section">
 			<div class="row justify-content-md-center">
@@ -8,8 +8,8 @@
 				 	  <vx-tab title="Data User">
 				 	  	<label>Alamat</label>
 				 	  	<p>{{dataUser.address}}</p>
-				 	  	<label>UPTD</label>
-				 	  	<p>{{dataUser.entity_name}} / {{dataUser.entity_type}}</p>
+				 	  	<label>Jenis Kapal</label>
+				 	  	<p>{{dataUser.ship_type}}</p>
 				 	  </vx-tab>
 				 	</vx-tabs>
 				 </div>

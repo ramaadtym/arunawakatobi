@@ -36,7 +36,7 @@ const routes = [
         meta: {description: 'Daftar UPTD'}
       },
       {
-        path: 'uptd/create',
+        path: 'uptd/create/:id',
         name: 'uptd-create',
         // component: resolve => require(['../pages/enumerator/create.vue'], resolve),
         component: resolve => require(['../pages/uptd/create.vue'], resolve),

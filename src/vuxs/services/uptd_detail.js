@@ -7,7 +7,7 @@
 //
 import Api from '../../services/api'
 
-let endpoint = new Api('entity')
+let endpoint = new Api('fisherman-user')
 
 export default {
   // Retrive current user info
@@ -21,9 +21,9 @@ export default {
       return res
     })
   },
-  showUPTD (id) {
-    return endpoint.show(id).then(res => {
-      return res.data
+  getUPTDUsersDetail (id, params) {
+    return endpoint.request('get', id, {params}).then(res => {
+      return res
     })
   },
   getUPTDDetail (id, params) {

@@ -71,31 +71,29 @@
                        <label class="btn btn-primary btn-sm">
                             <input type="file" @change="onFileSelected" accept="image/*" name="com_img" style="display:none;"> Tambah Gambar
                         </label>
-                      </div>  
+                      </div>
+                      
                   </vx-card>
                   <vx-card>
-                    <h5 slot="header" class="my-0">
-                      Detail Komoditas
-                    </h5>
                     <vx-form-item label="Ukuran" prop="commodity_size">
-                      <vx-input v-model="form.data.commodity_size" placeholder="input large" type="number" number step="0.01">
-                        <template slot="prepend">
-                          <select name="size_type" id="size_type" v-model="form.data.size_type"
-                                  class="btn btn-default btn-outline" outline>
-                            <option value="panjang">centimeter</option>
-                            <option value="jumlah">ekor/kg</option>
-                            <option value="berat">kg</option>
-                          </select>
-                        </template>
-                      </vx-input>
-                    </vx-form-item>
-                    <template slot="footer">
-                      <vx-button variant="primary" light solid outline to="/commodity">Batal</vx-button>
-                      <button type="submit" class="btn btn-primary ml-2" :loading="form.submitted" @click="submitForm">
-                        Simpan
-                      </button>
-                    </template>
-                  </vx-card>
+                        <vx-input v-model="form.data.commodity_size" placeholder="input large" type="number" number step="0.01">
+                          <template slot="prepend">
+                            <select name="size_type" id="size_type" v-model="form.data.size_type"
+                                    class="btn btn-default btn-outline" outline>
+                              <option value="panjang">centimeter</option>
+                              <option value="jumlah">ekor/kg</option>
+                              <option value="berat">kg</option>
+                            </select>
+                          </template>
+                        </vx-input>
+                      </vx-form-item>
+                      <template slot="footer">
+                        <vx-button variant="primary" light solid outline to="/commodity">Batal</vx-button>
+                        <button type="submit" class="btn btn-primary ml-2" :loading="form.submitted" @click="submitForm">
+                          Simpan
+                        </button>
+                      </template>  
+                    </vx-card>
                 </vx-form>
               </div>
             </vx-tab>
@@ -236,3 +234,4 @@
     border: none;
   }
 </style>
+
