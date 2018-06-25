@@ -44,6 +44,8 @@
               <router-link :to="{name: 'uptd-detail-users', params: { id: item.item.id }}">
                 <vx-button icon="la la-bars" variant="primary" light solid outline></vx-button>
               </router-link>
+              <vx-button icon="la la-times" v-on:click="fishermanDel(item.item.id)" variant="danger" light solid outline></vx-button>
+
               <vx-button @click="$root.$emit('show::modal','modal'+ item.item.id)" v-show="item.item.is_active === 1 && isSuperAdmin" icon="la la-times" variant="danger" solid outline></vx-button>
               <vx-modal :id="'modal'+item.item.id" title="Nonakifkan Pengguna">
                 <h5 class="text-center">Apakah Anda yakin ingin menonaktifkan User atas nama ({{item.item.full_name}}) ini?</h5>
@@ -68,6 +70,7 @@
   import table from 'vx/src/mixins/table'
   import InfoBoxCount from '../../components/InfoBoxCount'
   import uptdService from '../../vuxs/services/uptd'
+  import fishermanService from '../../vuxs/services/fisherman_kick'
   import session from '../../services/session'
 
   export default {
@@ -223,6 +226,14 @@
       },
       searchEntityName(name) {
         this.table.filter['full_name.icontains'] = name
+      },
+      fishermanDel(id) {
+        console.log(id)
+          // if (res.result === 'ok') {
+        fishermanService.deleteFisherman(id).then(function(res) {
+          location.reload()
+        })
+          // }
       }
     },
     mounted() {

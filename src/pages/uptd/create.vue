@@ -80,7 +80,7 @@
   import {mapState} from 'vuex'
   // import EntityService from '../../vuxs/services/entity'
   import RegencyService from '../../vuxs/services/regency'
-  // import uptdService from '../../vuxs/services/uptd_create'
+  import uptdService from '../../vuxs/services/uptd_create'
   // import GeoLocation from '../../services/geocoder'
   export default {
     data () {
@@ -204,13 +204,13 @@
         this.$refs.ruleForm.validate((valid) => {
           if (valid) {
             var self = this
-            // this.$store.dispatch('user/create', this.form.input)
-            // uptdService.createUPTDUsers(self.form.data).then(function(res) {
-            //   if (res.status === 'success') {
-            //     // self.$router.push('../detail/' + self.$route.params.id)
-            //     // console.log(res)
-            //   }
-            // })
+            this.$store.dispatch('user/create', this.form.input)
+            uptdService.createUPTDUsers(self.form.data).then(function(res) {
+              if (res.status === 'success') {
+                self.$router.push('../detail/' + self.$route.params.id)
+                console.log(res)
+              }
+            })
             console.log(self.form.data)
           }
         })
