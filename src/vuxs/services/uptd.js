@@ -50,5 +50,10 @@ export default {
     return endpoint.put('inactive/' + id, {}).then(res => {
       return res.data
     })
+  },
+  deleteUPTD (id) {
+    return endpoint.delete(id).then(res => {
+      return res.data
+    })
   }
 }
