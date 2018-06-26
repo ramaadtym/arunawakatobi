@@ -9,6 +9,9 @@
               <span class="icon-addon"><span class="la la-search"></span></span>
             </div>
             <div class="ks-filters">
+              <div class="btn-group" v-if="isSuperAdmin">
+              <vx-button variant="primary" block @click="addEnum()">Tambah Enumerator</vx-button>
+            </div>
               <div class="btn-group">
                 <vx-table-columns :columns="table.fields"></vx-table-columns>
               </div>
@@ -142,6 +145,9 @@
     methods: {
       details (item) {
         alert(JSON.stringify(item))
+      },
+      addEnum () {
+        this.$router.push('/enumerator/')
       },
       renderData (tbl) {
         let that = this
