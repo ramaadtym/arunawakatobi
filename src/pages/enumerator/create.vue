@@ -18,12 +18,17 @@
                 <vx-form-item label="No. Telp" prop="phone">
                   <vx-input name="phone" v-model="form.data.phone" id="phone"></vx-input>
                 </vx-form-item>
-
                 <vx-form-item label="UPTD" prop="entity">
                   <select name="entity" v-model="form.data.entity" id="entity" class="form-control white-bg">
                     <option value="">- Pilih UPTD -</option>
                     <option v-for="entity in entities" :value="entity.id">{{ entity.entity_name }}</option>
                   </select>
+                </vx-form-item>
+                <vx-form-item label="E-mail" prop="email">
+                  <vx-input type="email" name="email" v-model="form.data.email" id="email"></vx-input>
+                </vx-form-item>
+                <vx-form-item label="Alamat" prop="address">
+                  <vx-input name="address" v-model="form.data.address" id="address"></vx-input>
                 </vx-form-item>
                 <vx-form-item label="Jenis Nelayan" prop="fisherman_type" :error="errors.fisherman_typeid">
                   <select name="fisherman_type" v-model="form.data.fisherman_type" id="fisherman_type" class="form-control white-bg">
@@ -66,12 +71,13 @@
                 <div v-if="form.data.fisherman_type === 'upi'">
 
                 </div>
-                <!-- <vx-form-item label="Username" prop="username" :error="errors.username">
-                  <vx-input name="username" v-model="form.data.username" id="username"></vx-input>
+                <vx-form-item label="Status Nelayan" prop="user_group">
+                  <select name="user_group" v-model="form.data.user_group" id="user_group" class="form-control white-bg">
+                    <option value="">- Pilih Status -</option>
+                    <option v-for="grup in usersgroup" :value="grup.id">{{ grup.user_group_name }}</option>
+                  </select>
                 </vx-form-item>
-                <vx-form-item label="Password" prop="password" :error="errors.password">
-                  <vx-input type="password" name="password" v-model="form.data.password" id="password"></vx-input>
-                </vx-form-item> -->
+                
                 <template slot="action">
                   <vx-button variant="primary" outline light class="mr-2" to="/enumerator">Batal</vx-button>
                   <vx-button type="submit" variant="primary" @click="onSubmit">Simpan</vx-button>
@@ -89,6 +95,7 @@
   import {mapState} from 'vuex'
   import EntityService from '../../vuxs/services/entity'
   import RegencyService from '../../vuxs/services/regency'
+  import UserGroupService from '../../vuxs/services/user_group'
   // import GeoLocation from '../../services/geocoder'
   export default {
     data () {
@@ -128,6 +135,7 @@
         loading: false,
         states: [],
         entities: [],
+        usersgroup: [],
         formatted_address: '',
         typeOptions: [
           {
@@ -173,7 +181,7 @@
               {type: 'object', required: true, message: 'Harap pilih provinsi terlebih dahulu', trigger: 'blur'}
             ], */
             email: [
-              {type: 'email', message: 'masukkan format email yang benar', trigger: 'blur, change'}
+              {type: 'email', required: true, message: 'masukkan format email yang benar', trigger: 'blur, change'}
             ],
             address: [
               {required: true, message: 'Masukkan alamat pengguna', trigger: 'blur'}
@@ -212,14 +220,14 @@
       onSubmit () {
         // get input data from form.input
         this.form.input.entity = this.form.data.entity
-        // this.form.input.user_group = this.form.data.user_group
+        this.form.input.user_group = this.form.data.user_group
         this.form.input.full_name = this.form.data.full_name
-        // this.form.input.address = this.form.data.address
+        this.form.input.address = this.form.data.address
         // this.form.input.regency_id = this.form.data.regency.id
         // this.form.input.latlng = this.markers[0].position.lat + ',' + this.markers[0].position.lng
         // this.form.input.avatar = this.form.data.avatar
         // this.form.input.description = this.form.data.description
-        // this.form.input.email = this.form.data.email
+        this.form.input.email = this.form.data.email
         this.form.input.is_active = this.form.data.is_active
         this.form.input.password = this.form.data.password
         this.form.input.username = this.form.data.username
@@ -350,6 +358,9 @@
       let that = this
       EntityService.getEntity().then(res => {
         that.entities = res.data
+      })
+      UserGroupService.getAll().then(res => {
+        that.usersgroup = res.data
       })
       RegencyService.getRegency().then(res => {
         that.states = res.data
