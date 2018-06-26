@@ -9,6 +9,22 @@
             <h5 slot="header" class="my-0">Form Enumerator</h5>
             <div class="ks-items-block">
               <vx-form :model="form.data" :rules="form.rules" ref="ruleForm" type="vertical" label-size="2">
+                <vx-form-item label="Username" prop="username">
+                  <vx-input name="username" v-model="form.data.username" id="username"></vx-input>
+                </vx-form-item>
+                <vx-form-item label="Password" prop="password">
+                  <vx-input type="password" name="password" v-model="form.data.password" id="password"></vx-input>
+                </vx-form-item>
+                <vx-form-item label="No. Telp" prop="phone">
+                  <vx-input name="phone" v-model="form.data.phone" id="phone"></vx-input>
+                </vx-form-item>
+
+                <vx-form-item label="UPTD" prop="entity">
+                  <select name="entity" v-model="form.data.entity" id="entity" class="form-control white-bg">
+                    <option value="">- Pilih UPTD -</option>
+                    <option v-for="entity in entities" :value="entity.id">{{ entity.entity_name }}</option>
+                  </select>
+                </vx-form-item>
                 <vx-form-item label="Jenis Nelayan" prop="fisherman_type" :error="errors.fisherman_typeid">
                   <select name="fisherman_type" v-model="form.data.fisherman_type" id="fisherman_type" class="form-control white-bg">
                     <option value="">- Pilih Jenis Nelayan -</option>
@@ -145,7 +161,7 @@
           submitted: false,
           rules: {
             entity: [
-              {type: 'object', required: true, message: 'Harap pilih Lembaga terlebih dahulu', trigger: 'blur'}
+              {required: true, message: 'Harap pilih Lembaga terlebih dahulu', trigger: 'blur'}
             ],
             user_group: [
               {required: true, message: 'Harap pilih status pengguna terlebih dahulu', trigger: 'blur'}
@@ -153,9 +169,9 @@
             full_name: [
               {required: true, message: 'Masukkan nama pengguna', trigger: 'blur'}
             ],
-            regency: [
+            /* regency: [
               {type: 'object', required: true, message: 'Harap pilih provinsi terlebih dahulu', trigger: 'blur'}
-            ],
+            ], */
             email: [
               {type: 'email', message: 'masukkan format email yang benar', trigger: 'blur, change'}
             ],
@@ -195,15 +211,15 @@
     methods: {
       onSubmit () {
         // get input data from form.input
-        this.form.input.entity = this.form.data.entity.id
-        this.form.input.user_group = this.form.data.user_group
+        this.form.input.entity = this.form.data.entity
+        // this.form.input.user_group = this.form.data.user_group
         this.form.input.full_name = this.form.data.full_name
-        this.form.input.address = this.form.data.address
-        this.form.input.regency_id = this.form.data.regency.id
+        // this.form.input.address = this.form.data.address
+        // this.form.input.regency_id = this.form.data.regency.id
         // this.form.input.latlng = this.markers[0].position.lat + ',' + this.markers[0].position.lng
-        this.form.input.avatar = this.form.data.avatar
-        this.form.input.description = this.form.data.description
-        this.form.input.email = this.form.data.email
+        // this.form.input.avatar = this.form.data.avatar
+        // this.form.input.description = this.form.data.description
+        // this.form.input.email = this.form.data.email
         this.form.input.is_active = this.form.data.is_active
         this.form.input.password = this.form.data.password
         this.form.input.username = this.form.data.username
@@ -211,6 +227,7 @@
         this.$refs.ruleForm.validate((valid) => {
           if (valid) {
             this.$store.dispatch('user/create', this.form.input)
+            console.log(this.form.input)
           }
         })
       },
