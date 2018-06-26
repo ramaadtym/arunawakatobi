@@ -116,6 +116,7 @@
   var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dk2mkgzg3/image/upload'
   var CLOUDINARY_UPLOAD_PRESET = 'wbwuqzlz'
   var file = null
+  var oldPublicId = ''
   export default {
     data() {
       return {
@@ -189,9 +190,12 @@
                 self.form.data.image = res.data.secure_url
                 comodityService.updateComodity(self.form.data.id, self.form.data).then(function(res) {
                   if (res.status === 'success') {
-                    self.$router.push('/comodity')
+                    cloudinaryService.destroy(this.oldPublicId).then(function(res) {
+                      // self.$router.push('/comodity')
+                      console.log(res)
+                    })
                   } else {
-                    cloudinaryService.destroy(res.public_id).then(function(res) {
+                    cloudinaryService.destroy(res.publicId).then(function(res) {
                       alert('Upload Gagal')
                     })
                   }
@@ -202,6 +206,7 @@
                 return err
               })
             } else {
+              console.log(this.form.data)
               comodityService.updateComodity(self.form.data.id, self.form.data).then(function(res) {
                 console.log(res)
                 if (res.id === self.form.data.id) {
@@ -243,14 +248,17 @@
     }),
     created: function() {
       var self = this
-      comodityService.getComodity(this.$route.params.id).then(function(res) {
-        self.form.data.id = res.data[0].id
-        self.form.data.commodity_name = res.data[0].commodity_name
-        self.form.data.commodity_size = res.data[0].commodity_size
-        self.form.data.size_type = res.data[0].size_type
-        self.form.data.image = res.data[0].image
-        self.form.data.description = res.data[0].description
-        self.form.data.commodity_alias = res.data[0].commodity_alias
+      comodityService.showComodity(this.$route.params.id).then(function(res) {
+        console.log(res)
+        self.form.data.id = res.id
+        self.form.data.commodity_name = res.commodity_name
+        self.form.data.commodity_size = res.commodity_size
+        self.form.data.size_type = res.size_type
+        self.form.data.image = res.image
+        self.form.data.description = res.description
+        self.form.data.commodity_alias = res.commodity_alias
+        oldPublicId = res.image.match(/\w+.jpg+/)[0].split('.')[0]
+        console.log(oldPublicId)
       })
     }
   }
