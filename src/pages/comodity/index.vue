@@ -24,7 +24,7 @@
                 <span v-if="item.item.commodity_name">{{ item.item.commodity_name }}</span>
               </template>
               <template slot="district_name" scope="item">
-                <span v-if="item.item.commodity_alias">{{ item.item.commodity_alias[0].alias_name }}</span>
+                <span v-if="item.item.commodity_alias">{{ item.item.description }}</span>
               </template>
               <template slot="url_image" scope="item">
                 <img style="width:13rem;" v-if="item.item.image" :src="item.item.image"/>
@@ -66,7 +66,7 @@
               visible: true
             },
             district_name: {
-              label: 'Nama Daerah',
+              label: 'Deskripsi',
               sortable: false,
               alias: 'commodity_alias',
               visible: true
@@ -117,7 +117,7 @@
         console.log(parsedPublicId)
         cloudinaryService.destroy(parsedPublicId).then(function(res) {
           console.log(res)
-          if (res.result === 'ok') {
+          if (res.result === 'ok' || res.result === 'not found') {
             comodityService.deleteComodity(id).then(function(res) {
               location.reload()
             })
