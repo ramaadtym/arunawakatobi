@@ -32,6 +32,12 @@
                       <option v-for="type in shipTypeOptions" :value="type.value">{{ type.label }}</option>
                     </select>
                   </vx-form-item>
+                  <vx-form-item label="Enumerator" prop="enum">
+                    <select name="entity" v-model="form.data.entity" id="entity" class="form-control white-bg">
+                      <option value="">- Pilih Enumerator -</option>
+                      <option v-for="user in users" :value="user.id">{{ user.full_name }}</option>
+                    </select>
+                  </vx-form-item>
                 </div>
                 <div v-if="form.data.fisherman_type === 'budidaya'">
                   <vx-form-item label="Jenis Budidaya" prop="jenis_budidaya" :error="errors.jenis_budidayaid">
@@ -81,6 +87,7 @@
   // import EntityService from '../../vuxs/services/entity'
   import RegencyService from '../../vuxs/services/regency'
   import uptdService from '../../vuxs/services/uptd_create'
+  import userService from '../../vuxs/services/user'
   // import GeoLocation from '../../services/geocoder'
   export default {
     data () {
@@ -120,6 +127,7 @@
         loading: false,
         states: [],
         entities: [],
+        users: [],
         formatted_address: '',
         typeOptions: [
           {
@@ -282,6 +290,9 @@
     },
     mounted () {
       let that = this
+      userService.getAll().then(res => {
+        that.users = res.data
+      })
       RegencyService.getRegency().then(res => {
         that.states = res.data
         this.list = that.states.map(item => {
