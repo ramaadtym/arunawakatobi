@@ -96,11 +96,19 @@
   import EntityService from '../../vuxs/services/entity'
   import RegencyService from '../../vuxs/services/regency'
   import UserGroupService from '../../vuxs/services/user_group'
+  import UptdService from '../../vuxs/services/uptd_create'
+  import UserService from '../../vuxs/services/user'
   // import GeoLocation from '../../services/geocoder'
   export default {
     data () {
       return {
         place: '',
+        enumerator: {
+          full_name: '',
+          ship_name: '',
+          ship_type: '',
+          user_id: 0
+        },
         latLng: {},
         breadcrumbLink: [{
           text: 'Dashboard',
@@ -234,8 +242,26 @@
         this.form.input.phone = this.form.data.phone
         this.$refs.ruleForm.validate((valid) => {
           if (valid) {
-            this.$store.dispatch('user/create', this.form.input)
+            // this.$store.dispatch('user/create', this.form.input)
             console.log(this.form.input)
+            var self = this
+            this.enumerator.full_name = this.form.data.full_name
+            this.enumerator.ship_name = this.form.input.ship_name
+            this.enumerator.ship_type = this.form.input.ship_type
+            UserService.createUser(this.form.input).then(function (res) {
+              console.log(res)
+              if (res.status === 'success') {
+                console.log(self)
+                var id = res.data.id
+                self.enumerator.user_id = id
+                UptdService.createUPTDUsers(self.enumerator).then(function (res) {
+                  if (res.status === 'success') {
+                    self.$router.push('enumerator')
+                  }
+                })
+              }
+            })
+            console.log(this.enumerator)
           }
         })
       },

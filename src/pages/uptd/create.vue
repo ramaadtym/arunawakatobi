@@ -23,6 +23,9 @@
                   <vx-form-item label="No. Telp" prop="phone" :error="errors.phone">
                     <vx-input name="phone" v-model="form.data.phone" id="phone"></vx-input>
                   </vx-form-item>
+                  <vx-form-item label="Alamat" prop="address" :error="errors.address">
+                    <vx-input name="address" v-model="form.data.address" id="address"></vx-input>
+                  </vx-form-item>
                   <vx-form-item label="Nama Kapal" prop="ship_name" :error="errors.ship_name">
                     <vx-input name="ship_name" v-model="form.data.ship_name" id="ship_name"></vx-input>
                   </vx-form-item>
@@ -86,8 +89,9 @@
   import {mapState} from 'vuex'
   // import EntityService from '../../vuxs/services/entity'
   import RegencyService from '../../vuxs/services/regency'
-  import uptdService from '../../vuxs/services/uptd_create'
-  import userService from '../../vuxs/services/user'
+  import uptdService from '../../vuxs/services/uptd'
+  import uptdUsersService from '../../vuxs/services/uptd_create'
+  // import userService from '../../vuxs/services/user'
   // import GeoLocation from '../../services/geocoder'
   export default {
     data () {
@@ -210,10 +214,11 @@
     methods: {
       onSubmit () {
         this.$refs.ruleForm.validate((valid) => {
+          console.log(this.form.input)
           if (valid) {
             var self = this
             this.$store.dispatch('user/create', this.form.input)
-            uptdService.createUPTDUsers(self.form.data).then(function(res) {
+            uptdUsersService.createUPTDUsers(self.form.data).then(function(res) {
               if (res.status === 'success') {
                 self.$router.push('../detail/' + self.$route.params.id)
                 console.log(res)
@@ -290,8 +295,9 @@
     },
     mounted () {
       let that = this
-      userService.getAll().then(res => {
+      uptdService.getUPTDUsers(this.$route.params.id, {}).then(res => {
         that.users = res.data
+        // console.log(res)
       })
       RegencyService.getRegency().then(res => {
         that.states = res.data
