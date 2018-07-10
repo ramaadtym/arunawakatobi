@@ -1,0 +1,5 @@
+.list_overflow{
+    overflow-y: scroll;
+    height: 150px;
+    padding: 0 6% 0 2%;
+}
